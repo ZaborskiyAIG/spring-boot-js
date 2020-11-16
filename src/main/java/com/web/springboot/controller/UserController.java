@@ -26,10 +26,10 @@ public class UserController {
 
 	@GetMapping("/login")
 	public String loginPage() {
-        return "login";
-    }
+		return "login";
+	}
 
-    @GetMapping("/admin")
+	@GetMapping("/admin")
 	public String getUsers(Model model){
 		model.addAttribute("users", userService.listUsers());
 		model.addAttribute("roles", roleService.getRoles());
