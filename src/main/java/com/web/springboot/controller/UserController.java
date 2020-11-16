@@ -25,7 +25,7 @@ public class UserController {
 		this.roleService = roleService;
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping("/login")
     public String loginPage() {
         return "login";
     }
