@@ -24,19 +24,18 @@ public class UserController {
 		this.roleService = roleService;
 	}
 
-    @GetMapping("/login")
-    public String loginPage() {
+	@GetMapping("/login")
+	public String loginPage() {
         return "login";
     }
 
-	@GetMapping("/admin")
+    @GetMapping("/admin")
 	public String getUsers(Model model){
 		model.addAttribute("users", userService.listUsers());
 		model.addAttribute("roles", roleService.getRoles());
 		return "admin";
 	}
 
-	@Secured("ROLE_USER")
 	@GetMapping("/user")
 	public String getUser(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
