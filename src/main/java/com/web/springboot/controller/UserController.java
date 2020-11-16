@@ -19,7 +19,6 @@ public class UserController {
 
 	private RoleService roleService;
 
-	@Autowired
 	public UserController(UserService userService, RoleService roleService) {
 		this.userService = userService;
 		this.roleService = roleService;

@@ -2,6 +2,7 @@ package com.web.springboot.secutity.config;
 
 import com.web.springboot.secutity.config.handler.LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,6 +20,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    @Qualifier("userDetailsServiceImp")
     private UserDetailsService userDetailsService;
 
     @Override
@@ -44,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/login").anonymous()
                 .antMatchers("/admin/**").access("hasAnyRole('ADMIN')")
-               // .antMatchers("/user").access("hasAnyRole('USER', 'ADMIN')")
+                .antMatchers("/user").access("hasAnyRole('USER', 'ADMIN')")
                 .anyRequest().authenticated();
     }
 
