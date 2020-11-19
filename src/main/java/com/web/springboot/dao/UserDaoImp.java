@@ -7,7 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class UserDaoImp implements UserDao {
@@ -22,9 +24,9 @@ public class UserDaoImp implements UserDao {
    }
 
    @Override
-   public List<User> listUsers() {
+   public Set<User> listUsers() {
       TypedQuery<User> query =  entityManager.createQuery("from User user join fetch user.roles", User.class);
-      return query.getResultList();
+      return new HashSet<>(query.getResultList());
    }
 
    @Override

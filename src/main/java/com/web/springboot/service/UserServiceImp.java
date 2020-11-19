@@ -42,7 +42,7 @@ public class UserServiceImp implements UserService {
    }
 
    @Override
-   public List<User> listUsers() {
+   public Set<User> listUsers() {
       return userDao.listUsers();
    }
 

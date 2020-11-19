@@ -33,18 +33,19 @@ public class UserController {
 	public String getUsers(Model model){
 		model.addAttribute("users", userService.listUsers());
 		model.addAttribute("roles", roleService.getRoles());
-		return "admin";
+		return "admin_page";
 	}
 
 	@GetMapping("/user")
 	public String getUser(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		model.addAttribute("user",  userService.getUserByFirstName(auth.getName()));
-		return "user";
+		model.addAttribute("firstName", auth.getName());
+		return "user_page";
 	}
 
 	@PostMapping(value = "/admin/add")
 	public String addUser(@ModelAttribute User user, @RequestParam(value = "role") Long[] rolesId){
+
 		userService.add(user, rolesId);
 		return "redirect:/admin";
 	}
@@ -57,20 +58,12 @@ public class UserController {
 
 	@PostMapping(value = "/admin/update")
 	public String updateUser(@ModelAttribute("user") User user, @RequestParam(value = "role", required = false) Long[] rolesId){
-		userService.update(user, rolesId);
-		return "redirect:/admin";
-	}
 
-	@GetMapping(value = "/admin/update")
-	public String updateUser(@ModelAttribute("id") Long id, Model model){
-		if (userService.checkUserById(id)) {
-			return "redirect:/admin";
+		for(Long id: rolesId) {
+			System.out.println(id);
 		}
 
-		User user = userService.getUserById(id);
-
-		model.addAttribute("roles", roleService.getRoles());
-		model.addAttribute("user",user);
-		return "update";
+		userService.update(user, rolesId);
+		return "redirect:/admin";
 	}
 }

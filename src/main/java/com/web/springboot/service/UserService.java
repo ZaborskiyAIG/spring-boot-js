@@ -2,13 +2,13 @@ package com.web.springboot.service;
 
 import com.web.springboot.model.User;
 
-import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
     void add(User user, Long[] rolesId);
 
-    List<User> listUsers();
+    Set<User> listUsers();
 
     void remove(Long id);
 
