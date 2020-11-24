@@ -6,13 +6,13 @@ import java.util.Set;
 
 public interface UserService {
 
-    void add(User user, Long[] rolesId);
+    void add(User user, String[] rolesId);
 
     Set<User> listUsers();
 
     void remove(Long id);
 
-    void update(User user, Long[] rolesId);
+    void update(User user, String[] rolesName);
 
     User getUserById(Long id);
 

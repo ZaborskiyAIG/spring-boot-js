@@ -29,11 +29,11 @@ public class UserServiceImp implements UserService {
    }
 
    @Override
-   public void add(User user, Long[] rolesId) {
+   public void add(User user, String[] rolesName) {
       HashSet<Role> roles = new HashSet<>();
 
-      for(Long id: rolesId) {
-         roles.add(roleDao.getRoleById(id));
+      for(String name: rolesName) {
+         roles.add(roleDao.getRoleByName(name));
       }
 
       user.setRoles(roles);
@@ -52,16 +52,20 @@ public class UserServiceImp implements UserService {
    }
 
    @Override
-   public void update(User user, Long[] rolesId) {
+   public void update(User user, String[] rolesName) {
       Set<Role> roles = new HashSet<>();
       User oldUser = userDao.getUserById(user.getId());
 
-      if (rolesId != null) {
-         for (Long id : rolesId) {
-            roles.add(roleDao.getRoleById(id));
+      if (rolesName != null) {
+         for (String name : rolesName) {
+            roles.add(roleDao.getRoleByName(name));
          }
       } else {
          roles = oldUser.getRoles();
+      }
+
+      if (user.getPassword() != null) {
+         oldUser.setPassword(passwordEncoder.encode(user.getPassword()));
       }
 
       user.setPassword(oldUser.getPassword());

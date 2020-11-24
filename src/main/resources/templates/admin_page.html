@@ -15,7 +15,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
+    <script type="text/javascript" src="../static/js/allUsers.js" th:src="@{/js/allUsers.js}"></script>
     <script type="text/javascript" src="../static/js/update.js" th:src="@{/js/update.js}"></script>
+
 
     <link href="../static/css/admin.css" th:href="@{/css/admin.css}" rel="stylesheet" />
 
@@ -37,14 +39,14 @@
     <div class="row">
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
-                <ul class="nav flex-column">
+                <ul class="nav  flex-column">
                     <li class="nav-item">
                         <a class="nav-link active" th:href="@{/admin}">
                             Admin
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/user}">
+                        <a class="nav-link" th:href="@{/user}">
                             User
                         </a>
                     </li>
@@ -81,9 +83,10 @@
                                     <th>Last name</th>
                                     <th>Email</th>
                                     <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="table-tbody" class="delete" >
                                 <tr th:each=" user : ${users}">
                                     <td th:text="${user.id}" class="td"></td>
                                     <td th:text="${user.roles}" class="td"></td>
@@ -100,6 +103,12 @@
                                             Edit
                                         </button>
                                     </td>
+                                    <td>
+                                        <form method="post" th:action= "@{/admin/delete}" >
+                                            <input type="number"  hidden name="id" th:value="${user.id}" >
+                                            <button type="submit" class="btn btn-primary">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -108,14 +117,13 @@
                 </div>
 
                 <div id="new-user" class="tab-pane fade">
-                    <form th:action="@{/admin/add}" method="post">
                         <div class="card">
                             <div class="card-header font-weight-bold">
                                 Add new user
                             </div>
                             <div class="from-group col-md-4 text-center ">
                                 <label class="font-weight-bold" for="first-add">First name</label>
-                                <input class="form-control " id="first-add" placeholder="First name" name="firstName" type="text">
+                                <input class="form-control" id="first-add" placeholder="First name" name="firstName" type="text">
                             </div>
 
                             <div class="from-group col-md-4 text-center ">
@@ -136,17 +144,16 @@
                             <div class="from-group col-md-4 text-center">
                                 <label class="font-weight-bold" >Role</label>
                                 <br>
-                                <select class="form-control" name="role" multiple="multiple" size="2" >
+                                <select id="select-2" class="form-control" name="role" multiple="multiple" size="2" >
                                     <option th:each="role : ${roles}"
-                                            th:value="${role.id}"
+                                            th:value="${role}"
                                             th:text="${role.nameRole}">Wireframe</option>
                                 </select>
                             </div>
-                            <div class="text-center col mb-3">
-                                <button type="submit" class="btn btn-success">Add new user</button>
+                            <div class="text-center col mb-4">
+                                <button id="addButton" type="submit" class="btn btn-success">Add new user</button>
                             </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </main>
@@ -154,7 +161,6 @@
 </div>
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form th:action="@{/admin/update}" method="post">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -175,6 +181,11 @@
                     </div>
 
                     <div class="from-group col-md-6 text-center ">
+                        <label class="font-weight-bold" for="password">Password</label>
+                        <input class="form-control " id="password" placeholder="New password" name="password" type="text">
+                    </div>
+
+                    <div class="from-group col-md-6 text-center ">
                         <label class="font-weight-bold" for="last">Last name</label>
                         <input class="form-control" id="last" name="lastName" type="text">
                     </div>
@@ -187,7 +198,7 @@
                     <div class="from-group col-md-6 text-center">
                         <label class="font-weight-bold" >Role</label>
                         <br>
-                        <select class="form-control" name="role" multiple="multiple" size="2" >
+                        <select id="select-1" class="form-control" name="role" multiple="multiple" size="2" >
                             <option th:each="role : ${roles}"
                                     th:value="${role.id}"
                                     th:text="${role.nameRole}">Wireframe</option>
@@ -196,11 +207,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">Закрыть</button>
-                    <button type="submit" class="btn btn-primary">Edit user</button>
+                    <button id="editButton" type="submit" class="btn btn-primary">Edit user</button>
                 </div>
             </div>
         </div>
-    </form>
 </div>
 
 </body>

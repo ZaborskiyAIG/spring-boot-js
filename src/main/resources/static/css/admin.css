@@ -18,12 +18,13 @@
 }
 
 .sidebar .nav-link.active {
-    color: #007bff;
+    color: #f9f9f9;
+    background: #007bff;
 }
 
 .sidebar .nav-link:hover {
-    background: #007bff;
-    color: #f8f9fa;
+    background: #e1e4e0;
+    color: #007bff;
 }
 
 .nav-link {
