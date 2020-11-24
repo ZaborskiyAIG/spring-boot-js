@@ -22,17 +22,17 @@ public class RestUserController {
 
     @GetMapping("/admin")
     public ResponseEntity getUsers(){
-        return new ResponseEntity<>(userService.listUsers(), HttpStatus.OK);
+        return ResponseEntity.ok().body(userService.listUsers());
     }
 
     @GetMapping("/admin/roles")
     public ResponseEntity getRoles(){
-        return new ResponseEntity<>(roleService.getRoles(), HttpStatus.OK);
+        return ResponseEntity.ok().body(roleService.getRoles());
     }
 
     @GetMapping("/admin/{id}")
     public ResponseEntity getUserById(@PathVariable Long id){
-        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
+        return ResponseEntity.ok().body(userService.getUserById(id));
     }
 
     @PostMapping(value = "/admin/add")
